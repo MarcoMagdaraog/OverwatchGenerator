@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overwatch Character Selector</title>
+
+    <style>
+        img.characterIcon {
+            width: 300px;
+            border-radius: 200px;
+        }
+        img.button {
+            width: 80px;
+            border-radius: 40px;
+        }
+        body {
+            background-image: url('imageResources/LondonBackground.jpg');
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+        
+    </style>
+</head>
+<body>
+    <p style="background-image: url('imageResources/LondonBackground.jpg');"></p>
+    <!--
+    <script src="randomNumberGenerator"></script>
+    -->
+    <h1> Overwatch 2 Random Character Selector</h1>
+   
+    <img id = "pic" class="characterIcon" src="characterImages/Mystery.png" alt="">
+    <p id = "characterName">?????</p>
+    <p id = "characterRole">?????</p>
+    <p> Role Filter</p>
+    
+    <label class="switch">
+        <input type="checkbox">
+        <span class="slider round"></span>    
+    </label>
+    <!--
+    <button onclick = "tankToggle()">
+        <input type="checkbox">
+        <class "switch"></class>
+        <span>class = "slider"</span>
+    </button>
+    -->
+    <p>Press to select character</p>
+    
+    <button onclick = "main()">
+        <img class="button" src="imageResources/randomButton.png" alt="">
+    </button>
+    <script>
+        document.addEventListener('onclick',main);
+        //document.addEventListener('onclick',tankToggle);
+        //Main Function
+        function main(){
+        let tankOn= true;
+        let dmgOn =true;
+        let supportOn = true;
+        
+        let roleFilter;
+        if (tankOn == false && dmgOn == false && supportOn == false){
+            roleFilter = 0;
+        }
+        else if (tankOn == false && dmgOn == false && supportOn == true){
+            roleFilter = 1;
+        }
+        else if (tankOn == false && dmgOn == true && supportOn == false){
+            roleFilter = 2;
+        }
+        else if (tankOn == false && dmgOn == true && supportOn == true){
+            roleFilter = 3;
+        }
+        else if (tankOn == true && dmgOn == false && supportOn == false){
+            roleFilter = 4;
+        }
+        else if (tankOn == true && dmgOn == false && supportOn == true){
+            roleFilter = 5;
+        }
+        else if (tankOn == true && dmgOn == true && supportOn == false){
+            roleFilter = 6;
+        }
+
+        else if (tankOn == true && dmgOn == true && supportOn == true){
+            roleFilter = 7;
+        }
+        else{
+            return
+        }
+        //call function to generatoe random number 
+        let selection = randomNumberGenerator();
+        //call function to retrieve hero information from array with number
+        //for(let i = 0; i < 10; i++){
+            //setTimeout(heroInformation, 5000);
+            heroInformation(selection);
+        
+        //}
+        //validate hero information fits filter, if not restart process
+        //await delay(2000);
+       // for (let i = 0; i < 15; i++){
+
+        //wait (2000);
+        correctCharacter(roleFilter);
+    //}
+
+       // function tankToggle(){}
+        
+        function randomNumberGenerator(){
+            let value = Math.floor(Math.random() * 37);
+            return value;
+        }
+        
+       
+        function heroInformation(selection){
+            document.getElementById("pic").src = heroes[selection].image;
+            document.getElementById("characterName").innerHTML = heroes[selection].name;
+            document.getElementById("characterRole").innerHTML = heroes[selection].role;
+            
+            return;
+        }
+        function correctCharacter(roleFilter){
+             //   main();
+            switch(roleFilter){
+                case (0):
+                    //idk what I should put here
+                break;
+                case (1):
+                    if(heroes[selection].role != "Support") {
+                        
+                        main();
+                    }
+                break;
+                case (2):
+                    if(heroes[selection].role != "Damage"){
+                        main();
+                    }
+                break;
+                case (3):
+                    if (heroes[selectioni].role == "Tank"){
+                        main();
+                    }
+                break;
+                case (4):
+                    if(heroes[selection].role != "Tank"){
+                        main();
+                    }
+                break;
+                case (5):
+                    if(heroes[selection].role == "Damage"){
+                        main();
+                    }
+                break;
+                case (6):
+                    if(heroes[selection].role == "Support"){
+                        main();
+                    }
+                break;
+                case (7):
+                    //if(heroes[selection].role)
+                break;
+            }
+        }
+    }
+
+/*
+        function randomizer(){
+            
+            //document.getElementById("test123").innerHTML = test123 + 1;
+            
+            
+            let tankOn= false;
+            let dmgOn =true;
+            let supportOn = false;
+          
+            //heroInformation();
+
+            if( tankOn === true){
+            //let selection = Math.floor(Math.random() * 37);
+            
+            
+        
+            
+        
+        
+            if(heroes[selection].role != "Tank"){
+                randomizer();
+            
+            //const myTimeout = setTimeout(randomizer, 5000);
+            }
+            
+            }
+            if( dmgOn === true){
+            let selection = Math.floor(Math.random() * 37);
+
+            document.getElementById("pic").src = heroes[selection].image;
+            document.getElementById("characterName").innerHTML = heroes[selection].name;
+            document.getElementById("characterRole").innerHTML = heroes[selection].role;
+            
+            if(heroes[selection].role != "Damage"){
+                randomizer();
+            
+            //const myTimeout = setTimeout(randomizer, 5000);
+            }
+            
+            }
+        }
+*/
+        let heroes = [ 
+            {
+            name: "Ana",
+            role: "Support",
+            image: "characterImages/Ana.png"
+        },
+        {
+            name: "Ashe",
+            role: "Damage",
+            image: "characterImages/Ashe.png"
+        },
+        {
+            name: "Baptiste",
+            role: "Support",
+            image: "characterImages/Baptiste.png"
+        },
+        {
+            name: "Bastion",
+            role: "Damage",
+            image: "characterImages/Bastion.png"
+        },
+        {
+            name: "Brigitte",
+            role: "Support",
+            image: "characterImages/Brigitte.png"
+        },
+        {
+            name: "Cassidy",
+            role: "Damage",
+            image: "characterImages/Cassidy.png"
+        },
+        {
+            name: "Doomfist",
+            role: "Tank",
+            image: "characterImages/Doomfist.png"
+        },
+        {
+            name: "DVA",
+            role: "Tank",
+            image: "characterImages/DVA.png"
+        },
+        {
+            name: "Echo",
+            role: "Damage",
+            image: "characterImages/Echo.png"
+        },
+        {
+            name: "Genji",
+            role: "Damage",
+            image: "characterImages/Genji.png"
+        },
+        {
+            name: "Hanzo",
+            role: "Damage",
+            image: "characterImages/Hanzo.png"
+        },
+        {
+            name: "Junker Queen",
+            role: "Tank",
+            image: "characterImages/JunkerQueen.png"
+        },
+        {
+            name: "Junkrat",
+            role: "Damage",
+            image: "characterImages/Junkrat.png"
+        },
+        {
+            name: "Kiriko",
+            role: "Support",
+            image: "characterImages/Kiriko.png"
+        },
+        {
+            name: "Lucio",
+            role: "Support",
+            image: "characterImages/Lucio.png"
+        },
+        {
+            name: "Mei",
+            role: "Damage",
+            image: "characterImages/Mei.png"
+        },
+        {
+            name: "Mercy",
+            role: "Support",
+            image: "characterImages/Mercy.png"
+        },
+        {
+            name: "Moira",
+            role: "Support",
+            image: "characterImages/Moira.png"
+        },
+        {
+            name: "Orisa",
+            role: "Tank",
+            image: "characterImages/Orisa.png"
+        },
+        {
+            name: "Pharah",
+            role: "Damage",
+            image: "characterImages/Pharah.png"
+        },
+        {
+            name: "Ramattra",
+            role: "Tank",
+            image: "characterImages/Ramattra.png"
+        },
+        {
+            name: "Reaper",
+            role: "Damage",
+            image: "characterImages/Reaper.png"
+        },
+        {
+            name: "Reinhardt",
+            role: "Tank",
+            image: "characterImages/Reinhardt.png"
+        },
+        {
+            name: "Roadhog",
+            role: "Tank",
+            image: "characterImages/Roadhog.png"
+        },
+        {
+            name: "Sigma",
+            role: "Tank",
+            image: "characterImages/Sigma.png"
+        },
+        {
+            name: "Sojourn",
+            role: "Damage",
+            image: "characterImages/Sojourn.png"
+        },
+        {
+            name: "Soldier 76",
+            role: "Damage",
+            image: "characterImages/Soldier76.png"
+        },
+        {
+            name: "Sombra",
+            role: "Damage",
+            image: "characterImages/Sombra.png"
+        },
+        {
+            name: "Symmetra",
+            role: "Damage",
+            image: "characterImages/Symmetra.png"
+        },
+        {
+            name: "Torbjorn",
+            role: "Damage",
+            image: "characterImages/Torbjorn.png"
+        },
+        {
+            name: "Tracer",
+            role: "Damage",
+            image: "characterImages/Tracer.png"
+        },
+        {
+            name: "Widow Maker",
+            role: "Damage",
+            image: "characterImages/WidowMaker.png"
+        },
+        {
+            name: "Winston",
+            role: "Tank",
+            image: "characterImages/Winston.png"
+        },
+        {
+            name: "Wrecking Ball",
+            role: "Tank",
+            image: "characterImages/WreckingBall.png"
+        },
+        {
+            name: "Zarya",
+            role: "Tank",
+            image: "characterImages/Zarya.png"
+        },
+        {
+            name: "Zenyatta",
+            role: "Support",
+            image: "characterImages/Zenyatta.png"
+        }
+        
+    ]
+
+   // document.getElementById("demo").innerHTML = Ana.name; No need
+    </script>
+</body>
+</html>
